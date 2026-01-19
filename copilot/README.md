@@ -4,27 +4,43 @@ A collection of specialized AI agents for GitHub Copilot designed to enhance you
 
 ## 🤖 Agents
 
-### Code Agent (`Code.agent.md`)
-An expert coding assistant that helps with:
-- Writing clean, efficient code
-- Debugging and troubleshooting
-- Code reviews and optimization
-- Best practices implementation
-- Language-specific guidance
+### Architect-Assistant (`.github/agents/architect.assistant.md`)
+Focus: architecture decisions and lightweight documentation.
 
-### Architect Agent (`Architect.agent.md`)
-A software architecture specialist who assists with:
-- System design and architecture patterns
-- Scalability and performance considerations
-- Technology stack recommendations
-- Design decisions and trade-offs
-- Architecture documentation
+Responsibilities:
+- Clarify requirements and constraints (ask questions when unclear)
+- Break down architecture work into manageable plans
+- Document and track progress in:
+  - `.github/requirements.md` (owned by Architect-Assistant)
+  - `.github/architecture.md` (owned by Architect-Assistant)
 
-## 🚀 Getting Started
+Hard constraints:
+- Does **not** change code
+- Does **not** create other docs unless explicitly instructed
+- Avoids assumptions (especially on performance/security/maintainability) without confirmation
 
-### Prerequisites
-- GitHub Copilot subscription
-- VS Code or compatible IDE with Copilot support
+### Developer-Assistant (`.github/agents/developer.assistant.md`)
+Focus: implementation help under developer control.
+
+Responsibilities:
+- Code suggestions, debugging help, reviews, small incremental changes
+- Validate changes step-by-step (developer runs/tests)
+- Document and track progress in:
+  - `.github/implementation.md` (owned by Developer-Assistant)
+  - `.github/deployment.md` (owned by Developer-Assistant)
+
+Hard constraints:
+- Does **not** change architecture/design without explicit direction
+- Does **not** create other docs unless explicitly instructed
+- Avoids assumptions; asks clarifying questions when requirements are unclear
+
+## Handoffs (when to switch agents)
+- Use **Architect-Assistant** when you need design decisions, requirements clarification, or architecture documentation.
+- Use **Developer-Assistant** when you need coding help, fixes, tests, or deployment/implementation documentation updates.
+- Developer-Assistant can hand off to Architect-Assistant for “Architecture Review / Validation Review / Stakeholder Review”.
+
+## Model
+Both agents are intended to be used with **GPT-5.2**.
 
 ### Installation
 
@@ -42,8 +58,8 @@ mkdir -p .github/agents
 
 3. Copy the agent files to the agents directory:
 ```bash
-cp path/to/copilot-custom-agents/code.agent.md .github/agents/
-cp path/to/copilot-custom-agents/architect.agent.md .github/agents/
+cp path/to/copilot-custom-agents/architect.assistant.md .github/agents/
+cp path/to/copilot-custom-agents/developer.assistant.md .github/agents/
 ```
 
 Your project structure should look like this:
@@ -61,24 +77,17 @@ your-project/
 
 ## 📖 Usage
 
-### Using the Code Agent
-Invoke the code agent when you need assistance with implementation details, code quality, or debugging. The agent will provide contextual suggestions based on your current code.
+### Using the Developer Assistant
+Invoke the developer when you need assistance with implementation details, code quality, or debugging. The agent will provide contextual suggestions based on your current code.
 
-### Using the Architect Agent
-Engage the architect agent when making design decisions, planning system architecture, or evaluating technical approaches. It helps ensure your solutions are scalable and maintainable.
-
-## 🛠️ Customization
-
-Feel free to modify the agent definitions to suit your specific needs:
-- Adjust the agent personalities and communication styles
-- Add domain-specific knowledge or constraints
-- Tailor responses to your team's coding standards
+### Using the Architect Assistant
+Engage the architect when making design decisions, planning system architecture, or evaluating technical approaches. It helps ensure your solutions are scalable and maintainable.
 
 ## 📝 Examples
 
 Include specific examples of how these agents have helped in real scenarios:
-- Refactoring legacy code with the Code Agent
-- Designing microservices architecture with the Architect Agent
+- Refactoring legacy code with the Developer Assistant
+- Designing microservices architecture with the Architect Assistant
 - Optimizing database queries and API endpoints
 
 ## 🙏 Acknowledgments
